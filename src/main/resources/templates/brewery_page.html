@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Brewery Page</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* Style for the review form */
+        #reviewForm {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #reviewForm label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        #reviewForm input[type="number"],
+        #reviewForm textarea,
+        #reviewForm button {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        #reviewForm button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        #reviewForm button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style for the review ratings table */
+        #dataTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #dataTable th, #dataTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+
+        button,label {
+    background-color: #008CBA; /* Blue button color */
+    color: #fff; /* White text color */
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005580; /* Darker blue on hover */
+}
+
+span {
+    color: #FFFFFF;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+
+th {
+    background-color: #333; /* Dark background color for header */
+    color: #fff; /* White text color for header */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f47b03; /* Light gray background for even rows */
+}
+
+tbody tr:hover {
+    background-color: #f47b03; /* Darker gray on hover for non-header rows */
+}
+    </style>
+</head>
+<body>
+<h1>Brewery Details</h1>
+<p>Brewery Name: <span th:text="${brewery.name}"></span></p>
+<p>Brewery Address: <span th:text="${brewery.address_1}"></span></p>
+<p>Brewery State: <span th:text="${brewery.state}"></span></p>
+<p>Brewery PhoneNumber: <span th:text="${brewery.phone}"></span></p>
+<p>Brewery City: <span th:text="${brewery.city}"></span></p>
+<p>Brewery Website Url: <span th:text="${brewery.website_url}"></span></p>
+<form id="reviewForm" th:action="@{'/addReview/' + ${brewery.id}}" method="post">
+    <label for="rating">Rating (1-5):</label>
+    <input type="number" name="rating" min="1" max="5" required>
+
+    <label for="description">Description:</label>
+    <textarea name="description" rows="4" required></textarea>
+
+    <button type="submit">Submit Review</button>
+</form>
+<h2>Review Ratings</h2>
+<table id="dataTable" border="1">
+    <thead>
+    <tr>
+        <th>Ratings</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="review : ${ratings}">
+        <td th:text="${review.rating}"></td>
+        <td th:text="${review.description}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

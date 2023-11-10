@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Page</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        #brewerySearchForm {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+button,label {
+    background-color: #008CBA; /* Blue button color */
+    color: #fff; /* White text color */
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005580; /* Darker blue on hover */
+}
+
+h2 {
+    color: #FFFFFF;
+}
+span {
+    color: #FFFFFF;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td, a {
+    padding: 10px;
+    border: 1px solid #ddd; /* Light gray border */
+    color: #FFFFFF;
+}
+
+th {
+    background-color: #333; /* Dark background color for header */
+    color: #fff; /* White text color for header */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f47b03; /* Light gray background for even rows */
+}
+
+tbody tr:hover {
+    background-color: #f47b03; /* Darker gray on hover for non-header rows */
+}
+    </style>
+</head>
+<body>
+<h1>
+  Welcome <span th:text="${userLogin}"></span>
+</h1>
+<!-- Brewery Search Form -->
+<form id="brewerySearchForm" method="get" action="/search">
+    <label>Search by:</label>
+    <input type="radio" name="searchType" value="city" required> <span>City</span>
+    <input type="radio" name="searchType" value="name" required> <span>Name</span>
+    <input type="radio" name="searchType" value="type" required> <span>Type</span>
+    <input type="text" name="value" placeholder="Enter" required>
+
+    <button type="submit">Search</button>
+</form>
+<h2>Search Results</h2>
+<table id="dataTable" border="1">
+    <thead>
+    <tr>
+        <th>Brewery name</th>
+        <th>Brewery Address</th>
+        <th>Phone number</th>
+        <th>Web site URL</th>
+        <th>State</th>
+        <th>City</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="brewery : ${searchResults}">
+        <td><a th:href="@{'/getname?name=' + ${brewery.name}}" th:text="${brewery.name}"></a></td>
+        <td th:text="${brewery.address_1}"></td>
+        <td th:text="${brewery.phone}"></td>
+        <td th:text="${brewery.website_url}"></td>
+        <td th:text="${brewery.state}"></td>
+        <td th:text="${brewery.city}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
